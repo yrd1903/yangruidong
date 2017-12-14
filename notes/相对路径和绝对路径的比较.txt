@@ -1,0 +1,28 @@
+相对路径：用..和/配合，以当前文件为标志定位目标文件。
+(一般用于php中js,css,html)
+
+
+
+绝对路径：以/开头，/代表某一固定的目录，所要定位的目录以这个固定的目录为基准。
+(一般用于jsp和servlet中，比如：在服务器端，req.getRequestDispatcher("/pages/succ.jsp").forward(req, resp);这里的pages前面的/代表固定的web应用目录；request.sendRedirect("/test/pages/succ.jsp");这里的test前面的/代表站点目录http://localhost:8080/;)
+
+
+PHP中相对路径和绝对路径比较：
+
+绝对路径：以/开头，这个/代表站点地址，也就是只有IP，比如：http://localhost:80
+
+相对路径：以文件名或者..开头，前面自动补上当前文件所在目录。
+比如：
+sendMessage.php在QacSupport/adminwudicc/view/user/useroperation下面
+newUser.php在QacSupport/adminwudicc/view/user下面
+要实现从sendMessage.php这个页面跳转到newUser.php页面中，有两种方法：
+①：<a href='/QacSupport/adminwudicc/view/user/newUser.php'>测试</a>
+其中，开头的/代表站点地址，也就是http://localhost
+②：<a href='../newUser.php'>测试</a>
+
+如果写成：<a href='QacSupport/adminwudicc/view/user/newUser.php'>测试</a>
+那么实际的url地址为：
+http://localhost/QacSupport/adminwudicc/view/user/useroperation/QacSupport/adminwudicc/view/user/newUser.php
+也就是说QacSupport前面没有加/则默认按相对地址处理，也就是从http://localhost/QacSupport/adminwudicc/view/user/useroperation/开始
+
+

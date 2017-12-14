@@ -1,0 +1,40 @@
+
+
+
+		String xyzxyzOne = "xyzxyz";
+		String xyzOne = "xyz";
+		String xyzTwo = "xyz";
+		System.out.println("(xyzOne == xyzTwo):"
+				+ (xyzOne == xyzTwo));
+		
+		String xyzxyzTwo = xyzOne + xyzTwo;
+		System.out.println("(xyzxyzOne == xyzxyzTwo):"
+		+ (xyzxyzOne == xyzxyzTwo));
+
+
+输出：
+
+
+(xyzOne == xyzTwo):true
+(xyzxyzOne == xyzxyzTwo):false
+
+
+解释同下面例子：
+
+例6：编译期无法确定 
+
+String s0 = "ab"; 
+String s1 = "b"; 
+String s2 = "a" + s1; 
+System.out.println((s0 == s2)); //result = false
+    分析：JVM对于字符串引用，由于在字符串的"+"连接中，有字符串引用存在，而引用的值在程序编译期是无法确定的，即"a" + s1无法被编译器优化，只有在程序运行期来动态分配并将连接后的新地址赋给s2。所以上面程序的结果也就为false。
+
+
+另一种解释：
+
+String str1 = "abc"; String str2 = "ab"; String str3 = str2 + "c"; str1==str3是false 是因为String str3 = str2 + "c"涉及到变量（不全是常量）的相加，所以会生成新的对象，其内部实现是先new一个StringBuilder，然后 append(str2),append("c");然后让str3引用toString()返回的对象
+
+
+
+
+

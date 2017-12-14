@@ -1,0 +1,1 @@
+java-web项目的jar包在应用目录的lib下面，servlet的jar包在tomcat的lib下面。

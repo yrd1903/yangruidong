@@ -1,0 +1,59 @@
+在require中，路径要以/开头，比如：
+require_once dirname(__FILE__)."/../model/DoctorModel.class.php";
+但是，在css或者js文件引入的时候，路径不能以/开头，比如：
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+
+
+原因分析：
+函数dirname返回路径中的目录部分
+dirname(path)
+path 参数是一个包含有指向一个文件的全路径的字符串。该函数返回去掉文件名后的目录名，不包括后面的/
+<?php
+echo dirname("c:/testweb/home.php");
+echo dirname("/testweb/home.php");
+?>
+
+输出：
+c:/testweb
+/testweb
+
+因此，在后面与前面的目录衔接的时候必须加/
+
+
+
+
+而在href="../../css/style.css"中，浏览器会从当前文档的 URL 中提取相应的元素来填写相对 URL 中的空白，也就是说，开头会自动补上当前文档所在的目录，而且以/结尾。比如当前文档：F://localhost/admin/view/doctor.php
+那么，在href="../../css/style.css"的开头会自动加上F://localhost/admin/view/
+然后..会调整相对位置，重新截取url
+
+一旦使用相对路径，浏览器一般都会在前面自动加上一个路径
+
+
+
+
+
+
+
+HTML中的<base>标签
+<base> 标签为页面上的所有链接规定默认地址或默认目标。
+
+通常情况下，浏览器会从当前文档的 URL 中提取相应的元素来填写相对 URL 中的空白。
+
+使用 <base> 标签可以改变这一点。浏览器随后将不再使用当前文档的 URL，而使用指定的基本 URL 来解析所有的相对 URL。这其中包括 <a>、<img>、<link>、<form> 标签中的 URL。
+
+下面是一个例子：
+
+
+1 <head>
+2 <base href="http://www.w3school.com.cn/i/" />
+3 <base target="_blank" />
+4 </head>
+5 
+6 <body>
+7 <img src="eg_smile.gif" />
+8 <a href="http://www.w3school.com.cn">W3School</a>
+9 </body>
+
+上面这段代码中，<img>标签的src属性是一个相对路径，因为<head>中通过base标签设置了链接的默认地址，所以img的src实际的地址是“http://www.w3school.com.cn/i/eg_smile.gif”。同样的，<a>中只是指定了href，并未指定target属性，所以也会使用base中设置的target属性的值。
+
+

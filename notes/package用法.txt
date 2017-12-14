@@ -1,0 +1,7 @@
+package com.yangruidong;
+这里以package打头创建的一个java文件，编译后产生的class文件，必须放在文件目录com/yangruidong下面（文件目录可能是人工创建），否则这个class文件无法使用。
+其实package相当于给一个class类文件定义一个地址信息。定义了某个地址信息的class文件就必须放在这个文件目录下面。否则不能使用。
+
+
+在系统环境变量中添加了自定义的classpath后，在dos任意位置运行java xxx，只要所运行的java的class文件在classpath下面正确的目录下，就可以正常运行。
+比如：Tank.java用的打包方式为package com.yangruidong，那么Tank.class文件必须放在classpath/com/yangruidong下面，程序才能正常运行。。java在寻找到所要运行的class文件后，会把其需找时的目录与class文件中的package路径作对比，如果相同才能成功运行。

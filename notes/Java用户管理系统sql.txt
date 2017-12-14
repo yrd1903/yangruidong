@@ -1,0 +1,8 @@
+¥¥Ω®–Ú¡–£∫
+create sequence users_seq
+start with 12
+increment by 1
+minvalue 1
+nomaxvalue
+nocycle
+nocache

@@ -1,0 +1,26 @@
+创建Maven项目 pom.xml文件报错
+创建maven项目 pom.xml文件提示错误：
+Failure to transfer org.apache.maven.surefire:surefire:pom:2.10 from http://repo.maven.apache.org/maven2 was cached in the local repository, 
+resolution will not be reattempted until the update interval of central has elapsed or updates are forced. Original error: Could not transfer 
+artifact org.apache.maven.surefire:surefire:pom:2.10 from/to central (http://repo.maven.apache.org/maven2): java.net.ConnectException: 
+connection timed out to http://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire/2.10/surefire-2.10.pom
+
+
+在网上搜索后给出的解决方法是
+打开maven的本地库...\repository\org\apache\maven\plugins\maven-surefire-plugin\2.10会发现：里面少只有一个maven-surefire-plugin-2.10.pom.lastUpdated，而没有maven-surefire-plugin-2.10.jar
+
+
+解决方法： 
+1.删除maven-surefire-plugin-2.7.1.pom.lastUpdated文件
+2.右键点击project -> Maven - Update Dependencies
+
+
+
+对于Windows操作系统，执行 
+cd %userprofile%.m2\repository（定位到maven仓库位置）
+
+for /r %i in (*.lastUpdated) do del %i 
+然后在项目名右击，选择maven->update project，即可。
+
+
+

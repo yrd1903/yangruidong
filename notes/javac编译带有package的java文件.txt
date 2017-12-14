@@ -1,0 +1,2 @@
+javac -d . xxx.java
+如果java文件带有package打包信息，需要使用上面的格式编译

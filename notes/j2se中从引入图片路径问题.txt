@@ -1,0 +1,43 @@
+ 当你编写一个图形界面的程序的时候，你肯定要使用各种图片资源。那么，当你发布你的程序的时候，这些图片资源如何发布呢？最简洁的方式就是将这些图片资源连同你的class文件一起打包为一个可执行Jar文件，这样你只需发布一个jar文件就囊括了所有的内容，用户只需双击该Jar文件就能运行程序。如果把图片打包在Jar文件中，编写程序的时候如何访问这些图片呢？这些图片的路径是什么呢？可以用getResource()方法来解决这个问题。下面我们具体分析2种最常见的情况：
+
+1、你将所有资源打包为andy.jar，你的类位于一个包中：package andycpp;你的图片资源全部放在images文件夹中，而images文件夹也位于andycpp包内。这样的话，最终的路径表现为：
+
+andy.jar
+
+    |__andycpp
+
+             |__  GUITest.class
+
+             |__  images
+
+                         |__ Snap1.jpg
+
+因为图片文件夹和引用他的类位于同一个层次，因此可以通过相对路径来访问：
+
+        java.net.URL imgURL = GUITest.class.getResource("images/Snap1.jpg");
+
+          ImageIcon img1 = new ImageIcon(imgURL);
+
+这里需要注意的是大小写问题！Jar文件内部对大小写是敏感的，因此，如果图片本身叫做snap1.jpg，你把路径写成images/Snap1.jpg，那么结果将找不到该图片。还要注意的是，每个类（注意，不是对象）都有一个getResource()方法，但是你不能随便用，你只能使用和图片文件夹处于同一层次的类的getResource()方法。比如上图中，GUITest类和images处于同一层次，所以要使用该类的getResource()方法。
+
+2、另一种情况，如果你的类有很多，并且包结构很复杂，那么你就不大可能把图片和类放在同一个层次上，而是应该把图片放到最外层，让所有的类通过绝对路径来访问该图片：
+
+andy.jar
+
+    |__andycpp
+
+             |__  GUITest.class
+
+    |__  images
+
+             |__ Snap1.jpg
+
+代码如下：
+
+java.net.URL imgURL = GUITest.class.getResource("/images/Snap1.jpg");
+
+ImageIcon img1 = new ImageIcon(imgURL);
+
+大家看到和上述代码的区别了吗？区别非常细微，仅仅是在“images”的前面加了一个反斜杠"/"，这个反斜杠就表示根目录，没有反斜杠就表示相对路径。
+
+此处的根目录，就是代表项目的src目录，其实在程序运行时实际代表的是bin目录。

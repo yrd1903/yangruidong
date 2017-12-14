@@ -1,0 +1,4 @@
+要是只用Oracle自带的sql*plus的话，只要启动OracleServiceORCL即可
+要是使用PL/SQL Developer等第三方工具的话，OracleOraDb11g_home1TNSListener服务也要开启。
+
+要是使用应用程序读取oracle中的数据，需要同时开启服务OracleServiceORCL和服务OracleOraDb11g_home1TNSListener。

@@ -1,0 +1,9 @@
+ 
+从Maven项目中导出项目依赖的jar包：进入工程pom.xml 所在的目录下，执行如下命令：
+
+
+mvn dependency:copy-dependencies
+
+或在eclipse中，选择项目的pom.xml文件，点击右键菜单中的Run As,见下图红框中，在弹出的Configuration窗口中，输入 dependency:copy-dependencies后，点击运行
+
+maven项目所依赖的jar包会导出到targed/dependency目录中。

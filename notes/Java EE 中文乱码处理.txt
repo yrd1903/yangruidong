@@ -1,0 +1,20 @@
+中文乱码几种情况：
+
+一、表单提交
+
+1.POST请求
+
+解决方法：request.setCharacterEncoding("utf-8")  (或者别的编码)
+(setCharacterEncoding只适用于对body内的内容进行编码设置，对header信息不起作用)
+
+2.GET请求
+
+解决方法：String newString = new String(request.getParameter("username").getBytes("iso-8859-1"),"utf-8")
+
+二、超链接
+
+解决办法：同GET请求
+
+三、sendRedirect
+
+解决方法：
