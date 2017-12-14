@@ -2,6 +2,7 @@ HashMapµÄ¼üÎªStringÀàĞÍµÄÊ±ºò£¬²»¹ÜÊÇString ¶ÔÏó»¹ÊÇString ³£Á¿£¬¶¼»áÈ¥ÒÔStringµ
 ±ÈÈç£º
 
 
+
 		Clerk clerk1 = new Clerk("ËÎ½­", 39);
 		Clerk clerk2 = new Clerk("ÁÖ³å", 39);
 		HashMap hm = new HashMap();
