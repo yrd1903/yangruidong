@@ -1,9 +1,6 @@
 HashMap的键为String类型的时候，不管是String 对象还是String 常量，都会去以String的值为判断的标准，而不是对象的引用地址，即便是两个不同的引用地址，只要他们的值一样，都看做同一个键。
 比如：
 
-
-
-
 		Clerk clerk1 = new Clerk("宋江", 39);
 		Clerk clerk2 = new Clerk("林冲", 39);
 		HashMap hm = new HashMap();
