@@ -68,9 +68,9 @@ void train(int argc, char** argv) {
 
 JNIEXPORT void JNICALL Java_wrapper_FasttextWrapper_train(JNIEnv *env, jobject, jobjectArray arr)
 {
-	int stringCount = env->GetArrayLength(arr);
-	char **params = new char*[stringCount];
-	for (int i = 0; i<stringCount; i++) {
+	int paraNum = env->GetArrayLength(arr);
+	char **params = new char*[paraNum];
+	for (int i = 0; i<paraNum; i++) {
 		jstring string = (jstring)(env->GetObjectArrayElement(arr, i));
 		const char *rawString = env->GetStringUTFChars(string, 0);
 		
@@ -78,8 +78,7 @@ JNIEXPORT void JNICALL Java_wrapper_FasttextWrapper_train(JNIEnv *env, jobject, 
 		c = const_cast<char*>(rawString);
 		params[i] = c;
 	}
-
-	train(stringCount, params);
+	train(paraNum, params);
 }
 
 JNIEXPORT jlong JNICALL Java_wrapper_FasttextWrapper_loadModel(JNIEnv *env, jobject, jstring str)
@@ -87,22 +86,29 @@ JNIEXPORT jlong JNICALL Java_wrapper_FasttextWrapper_loadModel(JNIEnv *env, jobj
 	FastText *fasttext = new FastText();
 	std::string path = env->GetStringUTFChars(str, 0);
 	fasttext->loadModel(path);
-	
+
 	return (jlong)(fasttext);
 }
 
-
-JNIEXPORT jstring JNICALL Java_wrapper_FasttextWrapper_predict(JNIEnv *env, jobject, jlong address, jstring text)
+JNIEXPORT void JNICALL Java_wrapper_FasttextWrapper_unloadModel(JNIEnv *, jobject, jlong ftAddr)
 {
-	FastText * fasttext = (FastText *)address;
+	FastText * fasttext = (FastText *)ftAddr;
+	delete fasttext;
+	fasttext = NULL;
+}
+
+
+JNIEXPORT jstring JNICALL Java_wrapper_FasttextWrapper_predict(JNIEnv *env, jobject, jlong ftAddr, jstring text, jint k, jboolean prob)
+{
+	FastText * fasttext = (FastText *)ftAddr;
 
 	std::string str = env->GetStringUTFChars(text, 0);
 	std::istringstream is(str);
 
-	fasttext->predict(is, 1, true);
+	std::string predictRes = fasttext->predict(is, k, prob);
+	jstring res = env->NewStringUTF(predictRes.c_str());
 
-
-	return text;
+	return res;
 }
 
 
@@ -113,16 +119,19 @@ int main(int argc, char** argv) {
 	//char* arr[] = {"fasttext","predict","model.bin","test.txt"};
 	//predict(4, arr);
 
-	FastText fasttext;
-	fasttext.loadModel("model.bin");
+	for (int i = 0;i < 4;i++)
+	{
+		FastText *fasttext = new FastText();
+		fasttext->loadModel("model.bin");
 
-	std::string str = "football";
-	std::istringstream is(str);
+		std::string str = "football";
+		std::istringstream is(str);
 
-	bool print_prob = "ddd" == "predict-prob";
-	int32_t k = 1;
-
-	fasttext.predict(is, 1, true);
+		std::string res = fasttext->predict(is, 1, true);
+		std::cout << res;
+		delete fasttext;
+		//fasttext = NULL;
+	}
 
 	while (1);
 	return 0;

@@ -7,11 +7,13 @@ import javax.management.modelmbean.ModelMBean;
 public class FasttextWrapper {
 	
 	
-	public native void train(String[] params);
+	private native void train(String[] params);
 	
-	public native long loadModel(String modelPath);
+	private native long loadModel(String modelPath);
 	
-	public native String predict(long obj, String text);
+	private native void unloadModel(long ftAddr);
+	
+	private native String predict(long ftAddr, String text, int k, boolean prob);
 	
 	
 	static
@@ -37,11 +39,20 @@ public class FasttextWrapper {
 		
 		
 		String modelPath = "./data/model.bin";
-		long add = wrapper.loadModel(modelPath);
-		String text = "football";
-		for(int i=0;i<40;i++)
+		//long ftAddr = wrapper.loadModel(modelPath);
+		String text = "football\r\nsoccer";
+		for(int i=0;i<20;i++)
 		{
-			wrapper.predict(add, text);
+			long ftAddr = wrapper.loadModel(modelPath);
+			System.out.println(ftAddr);
+			//String str = wrapper.predict(ftAddr, text, 1, true);
+			//System.out.println(str);
+			//wrapper.unloadModel(ftAddr);
+//			System.out.println("unload finished");
+			//System.out.println(str);
+			//wrapper.unloadModel(ftAddr);
+			//String str1 = wrapper.predict(ftAddr, text, 1, true);
+			//System.out.println(str1);
 		}
 		
 		
